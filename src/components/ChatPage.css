@@ -3,6 +3,10 @@
   color: white;
 }
 
+.dark-theme .body {
+  background-color: #121212;
+}
+
 .dark-theme .sidebar {
   background-color: #333;
 }

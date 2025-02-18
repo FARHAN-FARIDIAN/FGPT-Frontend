@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './ChatPage.css';
-import { FaEdit, FaSignOutAlt, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaSignOutAlt, FaTrash, FaUndo } from 'react-icons/fa';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { useNavigate } from 'react-router-dom';
 
@@ -307,11 +307,40 @@ const ChatPage = () => {
         }
     };
 
+    const unhideButton = document.createElement('button');
+    unhideButton.style.display = 'none';
+    unhideButton.textContent = 'Show Sidebar';
+    unhideButton.className = 'unhide-button';
+    document.body.appendChild(unhideButton);
+
+
+    const hideSideBar = () => {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.style.display = 'none';
+        unhideButton.style.display = 'block';
+
+    }
+
+    const unhideSideBar = () => {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.style.display = 'block';
+        unhideButton.style.display = 'none';
+    }
+
+    unhideButton.onclick = unhideSideBar;
+
+
+    
+    
+    
+
+
+
     return (
         <div className={`chat-page ${isDarkMode ? 'dark-theme' : ''}`}>
             <div className="sidebar">
                 <div className="sidebar-header">
-                <div className='signOut'><FaSignOutAlt onClick={checkLogOut}/></div>
+                <div className='signOut'><FaUndo onClick={checkLogOut}/></div>
                 <h3>FGPT Chats</h3>
                     <button onClick={createNewChat}>+ New Chat</button>
                 </div>
@@ -321,6 +350,7 @@ const ChatPage = () => {
                         <input type="checkbox" onChange={(e) => setIsDarkMode(e.target.checked)} />
                         <span className="slider"></span>
                     </label>
+                    <div className='signOut'><FaSignOutAlt onClick={hideSideBar}/></div>
                 </div>
                 <div className="sidebar-header2">
                     {isLoading1 &&
